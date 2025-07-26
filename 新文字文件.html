@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>測試功能頁面</title>
+  <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: 'Prompt', sans-serif;
+      background: linear-gradient(135deg, #e0f9e0, #a1e3a1);
+      color: #2e7d32;
+    }
+
+    header {
+      text-align: center;
+      padding: 2rem;
+      background-color: #388e3c;
+      color: white;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    }
+
+    h1 {
+      margin: 0;
+      font-size: 2.5rem;
+    }
+
+    .container {
+      max-width: 900px;
+      margin: 2rem auto;
+      padding: 1rem;
+    }
+
+    .card {
+      background: white;
+      border-radius: 1rem;
+      box-shadow: 0 8px 20px rgba(0, 128, 0, 0.2);
+      padding: 2rem;
+      margin-bottom: 2rem;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 12px 24px rgba(0, 128, 0, 0.3);
+    }
+
+    button {
+      background-color: #66bb6a;
+      color: white;
+      border: none;
+      padding: 0.75rem 1.5rem;
+      font-size: 1rem;
+      border-radius: 0.5rem;
+      cursor: pointer;
+      transition: background-color 0.2s ease;
+    }
+
+    button:hover {
+      background-color: #4caf50;
+    }
+
+    footer {
+      text-align: center;
+      padding: 1rem;
+      font-size: 0.9rem;
+      color: #388e3c;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>綠色測試功能頁面</h1>
+    <p>此頁提供測試用的基本功能展示</p>
+  </header>
+
+  <div class="container">
+    <div class="card">
+      <h2>功能測試區塊</h2>
+      <p>點擊按鈕測試功能：</p>
+      <button onclick="alert('測試成功！')">執行測試</button>
+    </div>
+
+    <div class="card">
+      <h2>說明區</h2>
+      <p>這是一個使用漸層背景、圓角卡片與微動畫效果所設計的範例頁面。你可以在這裡擴充更多測試功能或資訊區塊。</p>
+    </div>
+  </div>
+
+  <footer>
+    &copy; 2025 綠意設計工作室
+  </footer>
+</body>
+</html>
