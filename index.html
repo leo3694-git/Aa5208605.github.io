@@ -1,99 +1,548 @@
 <!DOCTYPE html>
 <html lang="zh-TW">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>測試功能頁面</title>
-  <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@400;700&display=swap" rel="stylesheet">
-  <style>
-    * {
-      box-sizing: border-box;
-    }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Angel Lock - 智慧輔助門鎖</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&family=Orbitron:wght@400;700&display=swap');
 
-    body {
-      margin: 0;
-      font-family: 'Prompt', sans-serif;
-      background: linear-gradient(135deg, #e0f9e0, #a1e3a1);
-      color: #2e7d32;
-    }
+        :root {
+            --dark-blue: #1A237E; /* 深藍 */
+            --light-blue: #42A5F5; /* 亮藍 */
+            --purple: #7E57C2;    /* 紫色 */
+            --white: #F8F8F8;    /* 近白 */
+            --grey-text: #B0BEC5; /* 淺灰文字 */
+            --accent-glow: #8C9EFF; /* 強調光暈 */
+        }
 
-    header {
-      text-align: center;
-      padding: 2rem;
-      background-color: #388e3c;
-      color: white;
-      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-    }
+        body {
+            font-family: 'Roboto', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: var(--dark-blue);
+            color: var(--white);
+            line-height: 1.6;
+            scroll-behavior: smooth;
+            overflow-x: hidden; /* 防止水平滾動條 */
+        }
 
-    h1 {
-      margin: 0;
-      font-size: 2.5rem;
-    }
+        header {
+            background-color: var(--dark-blue);
+            padding: 20px 0;
+            text-align: center;
+            border-bottom: 2px solid var(--light-blue);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
 
-    .container {
-      max-width: 900px;
-      margin: 2rem auto;
-      padding: 1rem;
-    }
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 20px;
+        }
 
-    .card {
-      background: white;
-      border-radius: 1rem;
-      box-shadow: 0 8px 20px rgba(0, 128, 0, 0.2);
-      padding: 2rem;
-      margin-bottom: 2rem;
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
-    }
+        header h1 {
+            font-family: 'Orbitron', sans-serif;
+            margin: 0;
+            color: var(--light-blue);
+            font-size: 2.5em;
+            letter-spacing: 2px;
+            text-shadow: 0 0 10px var(--accent-glow);
+        }
 
-    .card:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 12px 24px rgba(0, 128, 0, 0.3);
-    }
+        nav ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+        }
 
-    button {
-      background-color: #66bb6a;
-      color: white;
-      border: none;
-      padding: 0.75rem 1.5rem;
-      font-size: 1rem;
-      border-radius: 0.5rem;
-      cursor: pointer;
-      transition: background-color 0.2s ease;
-    }
+        nav ul li {
+            margin-left: 30px;
+        }
 
-    button:hover {
-      background-color: #4caf50;
-    }
+        nav ul li a {
+            color: var(--white);
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 1.1em;
+            transition: color 0.3s ease, text-shadow 0.3s ease;
+        }
 
-    footer {
-      text-align: center;
-      padding: 1rem;
-      font-size: 0.9rem;
-      color: #388e3c;
-    }
-  </style>
+        nav ul li a:hover {
+            color: var(--light-blue);
+            text-shadow: 0 0 8px var(--accent-glow);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 20px;
+            background-color: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.4);
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        section {
+            padding: 60px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        section:last-child {
+            border-bottom: none;
+        }
+
+        h2 {
+            font-family: 'Orbitron', sans-serif;
+            color: var(--light-blue);
+            text-align: center;
+            font-size: 2.5em;
+            margin-bottom: 40px;
+            text-shadow: 0 0 10px var(--accent-glow);
+            position: relative;
+            padding-bottom: 10px;
+        }
+
+        h2::after {
+            content: '';
+            position: absolute;
+            left: 50%;
+            bottom: 0;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 3px;
+            background: linear-gradient(to right, var(--purple), var(--light-blue));
+            border-radius: 2px;
+        }
+
+        /* 產品介紹 */
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 40px;
+            padding: 20px 0;
+        }
+
+        .product-item {
+            background-color: rgba(255, 255, 255, 0.08);
+            border-radius: 8px;
+            padding: 25px;
+            text-align: center;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border: 1px solid var(--purple);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .product-item::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle at center, rgba(126, 87, 194, 0.2) 0%, rgba(66, 165, 245, 0.2) 50%, transparent 70%);
+            opacity: 0;
+            transition: opacity 0.5s ease;
+            transform: rotate(45deg);
+            z-index: 0;
+        }
+
+        .product-item:hover::before {
+            opacity: 1;
+        }
+
+        .product-item:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            border-color: var(--light-blue);
+        }
+
+        .product-item img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            border: 2px solid var(--light-blue);
+            box-shadow: 0 0 15px rgba(66, 165, 245, 0.5);
+            transition: transform 0.3s ease;
+        }
+
+        .product-item:hover img {
+            transform: scale(1.03);
+        }
+
+        .product-item h3 {
+            font-family: 'Orbitron', sans-serif;
+            color: var(--light-blue);
+            font-size: 1.8em;
+            margin-bottom: 15px;
+            text-shadow: 0 0 5px var(--accent-glow);
+        }
+
+        .product-item p {
+            color: var(--grey-text);
+            font-size: 1em;
+            margin-bottom: 20px;
+        }
+
+        .product-features ul {
+            list-style: none;
+            padding: 0;
+            text-align: left;
+            margin-top: 20px;
+            color: var(--white);
+        }
+
+        .product-features ul li {
+            margin-bottom: 10px;
+            padding-left: 25px;
+            position: relative;
+            font-size: 0.95em;
+        }
+
+        .product-features ul li::before {
+            content: '✓';
+            color: var(--purple);
+            font-size: 1.2em;
+            position: absolute;
+            left: 0;
+            top: 0;
+            text-shadow: 0 0 5px var(--purple);
+        }
+
+        /* Q&A */
+        .qa-container {
+            margin-top: 30px;
+        }
+
+        .qa-item {
+            background-color: rgba(255, 255, 255, 0.08);
+            border-radius: 8px;
+            margin-bottom: 15px;
+            overflow: hidden;
+            border: 1px solid var(--purple);
+            transition: border-color 0.3s ease;
+        }
+
+        .qa-item:hover {
+            border-color: var(--light-blue);
+        }
+
+        .qa-question {
+            padding: 18px 25px;
+            background-color: rgba(66, 165, 245, 0.15);
+            color: var(--white);
+            font-weight: 700;
+            font-size: 1.1em;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: background-color 0.3s ease;
+        }
+
+        .qa-question:hover {
+            background-color: rgba(66, 165, 245, 0.25);
+        }
+
+        .qa-question .arrow {
+            font-size: 1.5em;
+            transition: transform 0.3s ease;
+        }
+
+        .qa-answer {
+            padding: 0 25px;
+            background-color: rgba(255, 255, 255, 0.03);
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease-out, padding 0.4s ease-out;
+            color: var(--grey-text);
+        }
+
+        .qa-answer p {
+            padding-top: 15px; /* Adjust as needed */
+            padding-bottom: 15px;
+            margin: 0;
+        }
+
+        /* Active state for Q&A */
+        .qa-item.active .qa-question {
+            background-color: rgba(66, 165, 245, 0.3);
+            border-bottom: 1px solid var(--light-blue);
+        }
+
+        .qa-item.active .qa-question .arrow {
+            transform: rotate(90deg);
+        }
+
+        .qa-item.active .qa-answer {
+            max-height: 200px; /* Adjust based on expected answer length */
+            padding-top: 15px;
+            padding-bottom: 15px;
+        }
+
+        /* Call to Action */
+        .cta-section {
+            text-align: center;
+            padding: 60px 20px;
+            background: linear-gradient(135deg, var(--dark-blue) 0%, rgba(126, 87, 194, 0.2) 50%, var(--dark-blue) 100%);
+            margin-top: 40px;
+            border-radius: 10px;
+        }
+
+        .cta-section h2 {
+            margin-bottom: 20px;
+            color: var(--white);
+            text-shadow: 0 0 15px var(--purple);
+        }
+
+        .cta-button {
+            display: inline-block;
+            background: linear-gradient(45deg, var(--light-blue), var(--purple));
+            color: var(--white);
+            padding: 15px 30px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-size: 1.2em;
+            font-weight: 700;
+            transition: transform 0.3s ease, box-shadow 0.3s ease, background 0.3s ease;
+            box-shadow: 0 0 15px rgba(66, 165, 245, 0.5);
+            border: none;
+            cursor: pointer;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4), 0 0 25px var(--accent-glow);
+            background: linear-gradient(45deg, var(--purple), var(--light-blue));
+        }
+
+        footer {
+            background-color: var(--dark-blue);
+            color: var(--grey-text);
+            text-align: center;
+            padding: 30px 0;
+            border-top: 2px solid var(--purple);
+            margin-top: 50px;
+            font-size: 0.9em;
+        }
+
+        /* RWD */
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 2em;
+            }
+
+            nav ul {
+                flex-direction: column;
+                margin-top: 10px;
+            }
+
+            nav ul li {
+                margin: 10px 0;
+            }
+
+            .header-content {
+                flex-direction: column;
+            }
+
+            h2 {
+                font-size: 2em;
+            }
+
+            .product-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .product-item {
+                padding: 20px;
+            }
+
+            .qa-question {
+                font-size: 1em;
+                padding: 15px 20px;
+            }
+
+            .qa-answer {
+                padding: 0 20px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            header h1 {
+                font-size: 1.8em;
+            }
+
+            .container {
+                padding: 15px;
+                margin: 20px auto;
+            }
+
+            section {
+                padding: 40px 0;
+            }
+
+            .product-item h3 {
+                font-size: 1.5em;
+            }
+        }
+    </style>
 </head>
 <body>
-  <header>
-    <h1>綠色測試功能頁面</h1>
-    <p>此頁提供測試用的基本功能展示</p>
-  </header>
+    <header>
+        <div class="header-content">
+            <h1>Angel Lock</h1>
+            <nav>
+                <ul>
+                    <li><a href="#product">產品介紹</a></li>
+                    <li><a href="#qa">常見問題</a></li>
+                    <li><a href="#contact">聯絡我們</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
 
-  <div class="container">
-    <div class="card">
-      <h2>功能測試區塊</h2>
-      <p>點擊按鈕測試功能：</p>
-      <button onclick="alert('測試成功！')">執行測試</button>
+    <div class="container">
+        <section id="product">
+            <h2>產品介紹</h2>
+            <div class="product-grid">
+                <div class="product-item">
+                    <img src="https://via.placeholder.com/350x250/42A5F5/FFFFFF?text=Angel+Lock+Pro" alt="Angel Lock Pro">
+                    <h3>Angel Lock Pro</h3>
+                    <p>我們最先進的智慧輔助門鎖，提供極致安全與便利性。</p>
+                    <div class="product-features">
+                        <ul>
+                            <li>✓ 指紋辨識</li>
+                            <li>✓ 密碼輸入</li>
+                            <li>✓ APP遠端控制</li>
+                            <li>✓ 臨時訪客權限</li>
+                            <li>✓ 高強度合金打造</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="product-item">
+                    <img src="https://via.placeholder.com/350x250/7E57C2/FFFFFF?text=Angel+Lock+Lite" alt="Angel Lock Lite">
+                    <h3>Angel Lock Lite</h3>
+                    <p>簡約設計，核心功能不妥協，為您的居家安全提供可靠保障。</p>
+                    <div class="product-features">
+                        <ul>
+                            <li>✓ 密碼輸入</li>
+                            <li>✓ 藍牙解鎖</li>
+                            <li>✓ 低電量提醒</li>
+                            <li>✓ 防撬警報</li>
+                            <li>✓ 簡易安裝</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="product-item">
+                    <img src="https://via.placeholder.com/350x250/1A237E/FFFFFF?text=Angel+Guard+Cam" alt="Angel Guard Cam">
+                    <h3>Angel Guard Cam</h3>
+                    <p>整合式視訊監控模組，為您的門鎖提供額外一層可視化保護。</p>
+                    <div class="product-features">
+                        <ul>
+                            <li>✓ 高清廣角鏡頭</li>
+                            <li>✓ 夜視功能</li>
+                            <li>✓ 移動偵測通知</li>
+                            <li>✓ 雙向語音對講</li>
+                            <li>✓ 雲端錄影備份</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        ---
+
+        <section id="qa">
+            <h2>常見問題 (Q&A)</h2>
+            <div class="qa-container">
+                <div class="qa-item">
+                    <div class="qa-question">
+                        Angel Lock 的輔助門鎖適合我家安裝嗎？ <span class="arrow">></span>
+                    </div>
+                    <div class="qa-answer">
+                        <p>我們的輔助門鎖設計上兼容市面上大多數的門型和鎖體。建議您測量現有門的厚度，並檢查鎖邊距。您也可以參考產品頁面上的詳細安裝指南，或聯絡我們的客服團隊以獲得專業評估。</p>
+                    </div>
+                </div>
+
+                <div class="qa-item">
+                    <div class="qa-question">
+                        門鎖的電池續航力大約多久？ <span class="arrow">></span>
+                    </div>
+                    <div class="qa-answer">
+                        <p>Angel Lock 系列產品通常採用低功耗設計，電池續航力依型號和使用頻率而異，一般可達 6-12 個月。當電量較低時，門鎖會有聲光提示，並可透過應急電源（如 USB-C）暫時供電解鎖。</p>
+                    </div>
+                </div>
+
+                <div class="qa-item">
+                    <div class="qa-question">
+                        如果我忘記密碼或指紋無法辨識怎麼辦？ <span class="arrow">></span>
+                    </div>
+                    <div class="qa-answer">
+                        <p>別擔心！Angel Lock 門鎖提供多種解鎖方式，例如備用機械鑰匙、APP 遠端解鎖（需特定型號支援）。您也可以透過 APP 重設密碼或重新錄入指紋。若有任何問題，請隨時聯繫客服協助。</p>
+                    </div>
+                </div>
+
+                <div class="qa-item">
+                    <div class="qa-question">
+                        如何清潔和維護我的 Angel Lock 門鎖？ <span class="arrow">></span>
+                    </div>
+                    <div class="qa-answer">
+                        <p>建議使用柔軟的乾布輕輕擦拭門鎖表面，避免使用腐蝕性清潔劑。定期檢查電池狀態，並確保指紋感應器和按鍵區域保持清潔。請勿將水直接潑灑在門鎖上。</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        ---
+
+        <section id="contact" class="cta-section">
+            <h2>了解更多或立即購買</h2>
+            <p style="color: var(--grey-text); font-size: 1.1em; margin-bottom: 30px;">
+                想為您的家增添智慧安全？立即探索 Angel Lock 系列產品的無限可能！
+            </p>
+            <a href="#" class="cta-button">前往官方網站</a>
+            </section>
     </div>
 
-    <div class="card">
-      <h2>說明區</h2>
-      <p>這是一個使用漸層背景、圓角卡片與微動畫效果所設計的範例頁面。你可以在這裡擴充更多測試功能或資訊區塊。</p>
-    </div>
-  </div>
+    <footer>
+        <p>&copy; 2025 Angel Lock. All rights reserved.</p>
+        <p>提供智慧、安全的輔助門鎖解決方案。</p>
+    </footer>
 
-  <footer>
-    &copy; 2025 綠意設計工作室
-  </footer>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const qaQuestions = document.querySelectorAll('.qa-question');
+
+            qaQuestions.forEach(question => {
+                question.addEventListener('click', function() {
+                    const qaItem = this.parentNode; // Get the parent .qa-item
+                    const answer = this.nextElementSibling; // Get the .qa-answer sibling
+
+                    // Toggle active class on the parent qa-item
+                    qaItem.classList.toggle('active');
+
+                    // Adjust max-height for smooth transition
+                    if (qaItem.classList.contains('active')) {
+                        answer.style.maxHeight = answer.scrollHeight + "px";
+                    } else {
+                        answer.style.maxHeight = "0";
+                    }
+                });
+            });
+        });
+    </script>
 </body>
 </html>
