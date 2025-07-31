@@ -80,6 +80,40 @@
             text-shadow: 0 0 8px var(--accent-glow);
         }
 
+        /* Hamburger Menu */
+        .hamburger-menu {
+            display: none; /* 預設隱藏 */
+            flex-direction: column;
+            justify-content: space-around;
+            width: 30px;
+            height: 25px;
+            cursor: pointer;
+            z-index: 1001; /* 確保在導航之上 */
+        }
+
+        .hamburger-menu span {
+            display: block;
+            width: 100%;
+            height: 3px;
+            background-color: var(--white);
+            border-radius: 2px;
+            transition: all 0.3s ease-in-out;
+        }
+
+        /* Animation for hamburger menu when active */
+        .hamburger-menu.active span:nth-child(1) {
+            transform: translateY(11px) rotate(45deg);
+        }
+
+        .hamburger-menu.active span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .hamburger-menu.active span:nth-child(3) {
+            transform: translateY(-11px) rotate(-45deg);
+        }
+
+
         .container {
             max-width: 1200px;
             margin: 40px auto;
@@ -339,48 +373,48 @@
 
         /* RWD */
         @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                align-items: flex-start; /* 調整為左對齊 */
+            }
+
             header h1 {
                 font-size: 2em;
+                width: 100%; /* 確保標題佔滿寬度 */
+                text-align: center; /* 標題居中 */
+                margin-bottom: 15px; /* 增加標題和導航間距 */
+            }
+
+            nav {
+                width: 100%; /* 讓導航佔滿寬度 */
+                background-color: var(--dark-blue); /* 確保背景一致 */
+                padding-bottom: 10px; /* 增加底部間距 */
+                display: none; /* 預設隱藏導航，由JS控制 */
+            }
+
+            nav.active {
+                display: block; /* 點擊漢堡選單後顯示 */
             }
 
             nav ul {
                 flex-direction: column;
-                margin-top: 10px;
+                margin-top: 0;
+                align-items: center; /* 讓導航項目居中 */
             }
 
             nav ul li {
                 margin: 10px 0;
             }
 
-            .header-content {
-                flex-direction: column;
+            .hamburger-menu {
+                display: flex; /* 在小螢幕顯示漢堡選單 */
+                position: absolute; /* 相對於 header-content 定位 */
+                top: 25px; /* 調整位置 */
+                right: 20px; /* 調整位置 */
             }
 
             h2 {
                 font-size: 2em;
-            }
-
-            .product-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .product-item {
-                padding: 20px;
-            }
-
-            .qa-question {
-                font-size: 1em;
-                padding: 15px 20px;
-            }
-
-            .qa-answer {
-                padding: 0 20px;
-            }
-        }
-
-        @media (max-width: 480px) {
-            header h1 {
-                font-size: 1.8em;
             }
 
             .container {
@@ -392,8 +426,107 @@
                 padding: 40px 0;
             }
 
+            .product-grid {
+                grid-template-columns: 1fr;
+                gap: 30px; /* 調整產品間距 */
+            }
+
+            .product-item {
+                padding: 20px;
+            }
+
             .product-item h3 {
-                font-size: 1.5em;
+                font-size: 1.6em; /* 微調產品標題字體 */
+            }
+
+            .product-item p {
+                font-size: 0.9em; /* 微調產品描述字體 */
+            }
+
+            .product-features ul li {
+                font-size: 0.9em; /* 微調功能列表字體 */
+            }
+
+            .qa-question {
+                font-size: 1em;
+                padding: 15px 20px;
+            }
+
+            .qa-answer {
+                padding: 0 20px;
+            }
+
+            .qa-item.active .qa-answer {
+                max-height: 250px; /* 根據需要調整，讓回答可以完整顯示 */
+            }
+
+            .cta-button {
+                padding: 12px 25px; /* 調整按鈕大小 */
+                font-size: 1.1em; /* 調整按鈕字體 */
+            }
+        }
+
+        @media (max-width: 480px) {
+            header h1 {
+                font-size: 1.8em;
+            }
+
+            .hamburger-menu {
+                width: 28px;
+                height: 22px;
+            }
+
+            .hamburger-menu.active span:nth-child(1) {
+                transform: translateY(9px) rotate(45deg);
+            }
+
+            .hamburger-menu.active span:nth-child(3) {
+                transform: translateY(-9px) rotate(-45deg);
+            }
+
+            .container {
+                padding: 10px;
+                margin: 15px auto;
+            }
+
+            section {
+                padding: 30px 0;
+            }
+
+            .product-item h3 {
+                font-size: 1.4em;
+            }
+
+            .product-item p {
+                font-size: 0.85em;
+            }
+
+            .product-features ul li {
+                font-size: 0.85em;
+                padding-left: 20px; /* 調整勾選符號間距 */
+            }
+
+            .product-features ul li::before {
+                font-size: 1.1em;
+            }
+
+            .qa-question {
+                font-size: 0.95em;
+                padding: 12px 18px;
+            }
+
+            .qa-answer {
+                padding: 0 18px;
+            }
+
+            .cta-button {
+                padding: 10px 20px;
+                font-size: 1em;
+            }
+
+            footer {
+                padding: 20px 0;
+                font-size: 0.8em;
             }
         }
     </style>
@@ -402,7 +535,12 @@
     <header>
         <div class="header-content">
             <h1>Angel Lock</h1>
-            <nav>
+            <div class="hamburger-menu" id="hamburger-menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+            <nav id="main-nav">
                 <ul>
                     <li><a href="#product">產品介紹</a></li>
                     <li><a href="#qa">常見問題</a></li>
@@ -570,9 +708,55 @@
                     }
                 });
             });
+
+            // Hamburger menu functionality
+            const hamburgerMenu = document.getElementById('hamburger-menu');
+            const mainNav = document.getElementById('main-nav');
+
+            hamburgerMenu.addEventListener('click', function() {
+                hamburgerMenu.classList.toggle('active');
+                mainNav.classList.toggle('active');
+            });
+
+            // Close nav when a link is clicked (for smoother mobile experience)
+            mainNav.querySelectorAll('a').forEach(link => {
+                link.addEventListener('click', function() {
+                    if (window.innerWidth <= 768) { // Only close if on mobile view
+                        hamburgerMenu.classList.remove('active');
+                        mainNav.classList.remove('active');
+                    }
+                });
+            });
         });
     </script>
 
+    <script type="module">
+        // Import the functions you need from the SDKs you need
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-app.js";
+        // TODO: Add SDKs for Firebase products that you want to use
+        // https://firebase.google.com/docs/web/setup#available-libraries
 
+        // Your web app's Firebase configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyBNvKY9IcRDIXCCylRed2__vtQntnS9ssU",
+            authDomain: "angel-lock.firebaseapp.com",
+            projectId: "angel-lock",
+            storageBucket: "angel-lock.firebasestorage.app",
+            messagingSenderId: "974176371992",
+            appId: "1:974176371992:web:8db5bd97b0cbbb889fca6d"
+        };
+
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+
+        // 您可以在瀏覽器的開發者工具中查看此訊息，確認 Firebase 已成功初始化
+        console.log("Firebase 已成功初始化！");
+        
+        // 如果未來需要使用其他 Firebase 服務，您可以在此處引入並使用它們：
+        // 例如，要使用 Firestore：
+        // import { getFirestore } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js";
+        // const db = getFirestore(app);
+        // ... 然後就可以用 db 物件來讀寫 Firestore 資料了
+    </script>
 </body>
 </html>
